@@ -1,0 +1,6 @@
+SP05 Banh_ChocoPie Banh 45000 20
+SP01 Gao_ST25 Gao 25000 100
+SP06 Choi_Lau_Nha DoGiaDung 120000 15
+SP02 Thit_Bo_Kobe Thit 500000 10
+SP04 Kem_Celano Kem 15000 30
+SP03 Rau_Muong Rau 10000 50
