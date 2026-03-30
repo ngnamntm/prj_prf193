@@ -5,7 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
-#include <windows.h>
+#include <windows.h> // Thu vien ho tro hien thi Tieng Viet
 
 using namespace std;
 
@@ -30,7 +30,7 @@ public:
     void addStock(int amount) { stock += amount; }
 
     void display() const {
-        cout << left << setw(10) << id << setw(20) << name 
+        cout << left << setw(12) << id << setw(22) << name 
              << setw(15) << category << setw(12) << fixed << setprecision(0) << price 
              << setw(10) << stock << endl;
     }
@@ -54,7 +54,7 @@ class Store;
 class User {
 protected:
     string username, password, role;
-    vector<string> notifications; // TÍNH NĂNG MỚI: Hộp thư thông báo
+    vector<string> notifications; 
 
 public:
     User(string u, string p, string r) : username(u), password(p), role(r) {}
@@ -64,7 +64,6 @@ public:
     string getPassword() const { return password; }
     string getRole() const { return role; }
 
-    // Quản lý thông báo
     void addNotification(string msg) { notifications.push_back(msg); }
     void showNotifications() {
         if (!notifications.empty()) {
@@ -74,7 +73,7 @@ public:
                 cout << "   -> " << msg << "\n";
             }
             cout << "=========================================\n";
-            notifications.clear(); // Xóa sau khi đã đọc
+            notifications.clear(); 
         }
     }
 
@@ -92,6 +91,17 @@ public:
 
     ~Store() { for (User* u : users) delete u; }
 
+    // --- CÔNG CỤ TÁCH CHỮ VÀ SỐ CHO NATURAL SORT ---
+    static void splitId(const string& id, string& prefix, int& num) {
+        prefix = "";
+        string numStr = "";
+        for (char c : id) {
+            if (isalpha(c)) prefix += c; 
+            else if (isdigit(c)) numStr += c; 
+        }
+        num = numStr.empty() ? 0 : stoi(numStr); 
+    }
+
     void loadProductsFromFile(const string& filename) {
         products.clear();
         ifstream file(filename);
@@ -99,51 +109,116 @@ public:
             cout << "[LỖI] Khong the mo file " << filename << "!\n";
             return;
         }
-        string id, name, category; double price; int stock;
+        
+        string id, name, category; 
+        double price; 
+        int stock;
+        int count = 0;
+
         while (file >> id >> name >> category >> price >> stock) {
             products.push_back(Product(id, name, category, price, stock));
+            count++;
         }
+        
+        if (!file.eof()) { 
+            cout << "\n[!] CANH BAO QUAN TRONG:\n";
+            cout << "[-] He thong phat hien loi format du lieu tai dong thu " << count + 1 << " trong file products.txt!\n";
+            cout << "[-] Vui long kiem tra lai dong nay.\n";
+            cout << "[-] Hien tai chi nap duoc " << count << " san pham an toan.\n\n";
+        } else {
+            cout << "[+] Da nap thanh cong " << count << " san pham tu file!\n";
+        }
+
         file.close();
-        sort(products.begin(), products.end(), [](const Product& a, const Product& b) { return a.getId() < b.getId(); });
+        
+        // Sắp xếp tự nhiên (Natural Sort)
+        sort(products.begin(), products.end(), [](const Product& a, const Product& b) { 
+            string prefixA, prefixB; int numA, numB;
+            splitId(a.getId(), prefixA, numA);
+            splitId(b.getId(), prefixB, numB);
+            
+            if (prefixA != prefixB) return prefixA < prefixB;
+            return numA < numB; 
+        });
+    }
+
+    void saveAllProductsToFile(const string& filename) {
+        ofstream file(filename); 
+        if (file.is_open()) {
+            for (const auto& p : products) {
+                file << p.getId() << " " << p.getName() << " " 
+                     << p.getCategory() << " " << fixed << setprecision(0) << p.getPrice() << " " 
+                     << p.getStock() << "\n";
+            }
+            file.close();
+        }
+    }
+
+    bool deleteProduct(string id) {
+        for (auto it = products.begin(); it != products.end(); ++it) {
+            if (it->getId() == id) {
+                products.erase(it); 
+                saveAllProductsToFile("products.txt"); 
+                return true; 
+            }
+        }
+        return false;
     }
 
     void addNewProduct(string id, string name, string cat, double price, int stock) {
         products.push_back(Product(id, name, cat, price, stock));
-        sort(products.begin(), products.end(), [](const Product& a, const Product& b) { return a.getId() < b.getId(); });
-        ofstream file("products.txt", ios::app);
-        if (file.is_open()) {
-            file << "\n" << id << " " << name << " " << cat << " " << price << " " << stock;
-            file.close();
-            cout << "[+] Da luu san pham vao file products.txt!\n";
-        }
+        // Sắp xếp lại bằng Natural Sort
+        sort(products.begin(), products.end(), [](const Product& a, const Product& b) { 
+            string prefixA, prefixB; int numA, numB;
+            splitId(a.getId(), prefixA, numA);
+            splitId(b.getId(), prefixB, numB);
+            if (prefixA != prefixB) return prefixA < prefixB;
+            return numA < numB; 
+        });
+        saveAllProductsToFile("products.txt");
+        cout << "[+] Da luu san pham vao file products.txt!\n";
     }
 
     void displayAllProducts() const {
         cout << "\n--- DANH SACH SAN PHAM ---\n";
-        cout << left << setw(10) << "ID" << setw(20) << "Ten SP" 
+        cout << left << setw(12) << "ID" << setw(22) << "Ten SP" 
              << setw(15) << "Loai" << setw(12) << "Gia(VND)" << setw(10) << "Ton kho" << endl;
-        cout << "------------------------------------------------------------------\n";
+        cout << "-----------------------------------------------------------------------\n";
         for (const auto& p : products) p.display();
     }
 
+    // TÌM KIẾM NHỊ PHÂN THÔNG MINH
     Product* binarySearch(const string& id) {
+        string targetPrefix; int targetNum;
+        splitId(id, targetPrefix, targetNum); 
+
         int left = 0, right = products.size() - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            if (products[mid].getId() == id) return &products[mid];
-            if (products[mid].getId() < id) left = mid + 1;
-            else right = mid - 1;
+            
+            string midPrefix; int midNum;
+            splitId(products[mid].getId(), midPrefix, midNum); 
+            
+            if (midPrefix == targetPrefix && midNum == targetNum) {
+                return &products[mid]; 
+            }
+            
+            if (midPrefix < targetPrefix || (midPrefix == targetPrefix && midNum < targetNum)) {
+                left = mid + 1; 
+            } else {
+                right = mid - 1; 
+            }
         }
-        return nullptr;
+        return nullptr; 
     }
 
     void searchProductsByName(string keyword) const {
         transform(keyword.begin(), keyword.end(), keyword.begin(), ::tolower);
         bool found = false;
         cout << "\n--- KET QUA TIM KIEM CHO: '" << keyword << "' ---\n";
-        cout << left << setw(10) << "ID" << setw(20) << "Ten SP" 
+        cout << left << setw(12) << "ID" << setw(22) << "Ten SP" 
              << setw(15) << "Loai" << setw(12) << "Gia(VND)" << setw(10) << "Ton kho" << endl;
-        cout << "------------------------------------------------------------------\n";
+        cout << "-----------------------------------------------------------------------\n";
         for (const auto& p : products) {
             string lowerName = p.getName();
             transform(lowerName.begin(), lowerName.end(), lowerName.begin(), ::tolower);
@@ -161,7 +236,6 @@ public:
         for (const string& log : actionLogs) cout << log << "\n";
     }
 
-    // Hàm tiện ích để bắn thông báo cho khách hàng
     void notifyUser(string username, string message) {
         for (User* u : users) {
             if (u->getUsername() == username) {
@@ -196,7 +270,7 @@ public:
         int choice;
         do {
             cout << "\n=== MENU QUẢN LÝ: " << username << " ===\n";
-            cout << "1. Xem kho hang\n2. Nhap them hang (Ton tai san)\n3. Them SAN PHAM MOI (Luu vao file)\n0. Dang xuat\nChon: "; cin >> choice;
+            cout << "1. Xem kho hang\n2. Nhap them hang \n3. Them SAN PHAM MOI \n4. XOA san pham \n0. Dang xuat\nChon: "; cin >> choice;
 
             if (choice == 1) store.displayAllProducts();
             else if (choice == 2) {
@@ -206,6 +280,8 @@ public:
                 if (p) {
                     cout << "Nhap so luong them: "; cin >> amount;
                     p->addStock(amount);
+                    store.saveAllProductsToFile("products.txt"); 
+                    cout << "=> Da cap nhat kho hang!\n";
                     store.addLog(username, role, "Nhap " + to_string(amount) + " hang cho ID: " + id);
                 } else cout << "=> Khong tim thay!\n";
             }
@@ -224,6 +300,25 @@ public:
                     store.addLog(username, role, "Tao san pham moi: " + id + " - " + name);
                 }
             }
+            else if (choice == 4) { 
+                string id;
+                cout << "Nhap ID san pham can XOA: "; cin >> id;
+                Product* p = store.binarySearch(id);
+                
+                if (p) {
+                    string name = p->getName(); 
+                    char confirm;
+                    cout << "[!] CANH BAO: Ban co chac chan muon xoa vinh vien '" << name << "' (y/n)? ";
+                    cin >> confirm;
+                    
+                    if (confirm == 'y' || confirm == 'Y') {
+                        if (store.deleteProduct(id)) {
+                            cout << "[+] Da xoa hoan toan '" << name << "' khoi he thong va file!\n";
+                            store.addLog(username, role, "XOA TOAN BO san pham: " + id + " - " + name);
+                        }
+                    } else cout << "=> Da huy thao tac xoa.\n";
+                } else cout << "[-] Khong tim thay san pham mang ID nay!\n";
+            }
         } while (choice != 0);
     }
 };
@@ -238,7 +333,7 @@ public:
             if (!store.pendingOrders.empty()) {
                 cout << "[!] BAN CO " << store.pendingOrders.size() << " DON HANG CHO XAC NHAN!\n";
             }
-            cout << "1. Xem danh sach mat hang\n2. DUYET DON HANG ONLINE\n0. Dang xuat\nChon: "; cin >> choice;
+            cout << "1. Xem danh sach mat hang\n2. DUYET DON HANG\n0. Dang xuat\nChon: "; cin >> choice;
 
             if (choice == 1) store.displayAllProducts();
             else if (choice == 2) { 
@@ -265,8 +360,6 @@ public:
                     cout << "[-] KHO KHONG DU HANG DE DUYET DON NAY! (Tu dong huy don)\n";
                     store.pendingOrders.erase(store.pendingOrders.begin());
                     store.addLog(username, role, "Huy don cua " + currentOrder.customerName + " do het hang.");
-                    
-                    // TÍNH NĂNG MỚI: Báo cho khách biết đơn bị hủy
                     store.notifyUser(currentOrder.customerName, "Don hang cua ban bi HUY do co san pham het hang trong kho!");
                 } else {
                     char confirm;
@@ -279,12 +372,13 @@ public:
                             logDetail += p->getName() + "(x" + to_string(item.quantity) + ") ";
                         }
                         store.totalRevenue += currentOrder.totalBill;
-                        store.addLog(username, role, logDetail + "Thu: " + to_string((long long)currentOrder.totalBill));
                         
+                        // Luu lai ton kho moi xuong file sau khi ban
+                        store.saveAllProductsToFile("products.txt");
+
+                        store.addLog(username, role, logDetail + "Thu: " + to_string((long long)currentOrder.totalBill));
                         cout << "[+] DUYET DON THANH CONG!\n";
                         store.pendingOrders.erase(store.pendingOrders.begin()); 
-                        
-                        // TÍNH NĂNG MỚI: Báo cho khách biết đơn đã duyệt thành công
                         store.notifyUser(currentOrder.customerName, "Don hang tri gia " + to_string((long long)currentOrder.totalBill) + " VND cua ban DA DUOC DUYET thanh cong. Hang dang duoc giao!");
                     }
                 }
@@ -301,10 +395,10 @@ public:
     void showMenu(Store& store) override {
         int choice;
         do {
-            showNotifications(); // Hiển thị thông báo ngay khi vào Menu
+            showNotifications(); 
 
             cout << "\n=== MENU KHÁCH HÀNG: " << username << " ===\n";
-            cout << "1. Xem/Tim kiem san pham (Khong mua)\n2. THEM SAN PHAM VAO GIO\n3. Xem gio & DAT HANG\n0. Dang xuat\nChon: "; cin >> choice;
+            cout << "1. Xem/Tim kiem san pham \n2. THEM SAN PHAM VAO GIO\n3. Xem gio & DAT HANG\n0. Dang xuat\nChon: "; cin >> choice;
 
             if (choice == 1) {
                 cout << "Ban muon: 1. Xem tat ca  |  2. Tim theo ten? (1/2): "; 
@@ -316,7 +410,6 @@ public:
                 }
             }
             else if (choice == 2) {
-                // TÍNH NĂNG MỚI: UX hỗ trợ xem hàng trước khi điền ID
                 cout << "\n--- THEM VAO GIO HANG ---\n";
                 cout << "Ban co the xem danh sach truoc khi chon ID:\n";
                 cout << "1. Xem tat ca san pham\n2. Tim san pham theo ten\n3. Toi da biet ID san pham\nChon (1/2/3): ";
@@ -368,16 +461,15 @@ public:
 };
 
 int main() {
-    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8); 
+
     Store myStore;
     myStore.loadProductsFromFile("products.txt");
     
-    // Tạo sẵn các tài khoản quản trị (Có mật khẩu)
+    // Tao san cac tai khoan quan tri
     myStore.users.push_back(new Boss("boss", "123"));
     myStore.users.push_back(new Manager("quanly", "123"));
     myStore.users.push_back(new Staff("nhanvien", "123"));
-    // Tạo sẵn 1 khách hàng mẫu để test
-    myStore.users.push_back(new Customer("khach", ""));
 
     string user, pass;
     while (true) {
@@ -388,7 +480,6 @@ int main() {
         if (user == "exit") break;
 
         User* loggedInUser = nullptr;
-        // Kiểm tra xem tên đăng nhập đã tồn tại chưa
         for (User* u : myStore.users) {
             if (u->getUsername() == user) {
                 loggedInUser = u; 
@@ -397,13 +488,11 @@ int main() {
         }
 
         if (loggedInUser != nullptr) {
-            // TÍNH NĂNG MỚI: Khách hàng không cần mật khẩu
             if (loggedInUser->getRole() == "Customer") {
                 cout << "\n[+] Chao mung khach hang " << user << " tro lai!\n";
                 loggedInUser->showMenu(myStore);
             } 
             else {
-                // Nhóm quản trị vẫn phải nhập pass
                 cout << "Nhap mat khau: "; cin >> pass;
                 if (loggedInUser->getPassword() == pass) {
                     cout << "\n[!] Dang nhap thanh cong quyen " << loggedInUser->getRole() << "!\n";
@@ -413,10 +502,9 @@ int main() {
                 }
             }
         } else {
-            // TÍNH NĂNG MỚI: Tự động tạo tài khoản cho khách vãng lai
             cout << "\n[+] Tai khoan chua ton tai. He thong dang tu dong tao moi tai khoan khach...\n";
             cout << "[+] Xin chao khach hang moi: " << user << "!\n";
-            Customer* newCustomer = new Customer(user, ""); // Pass rỗng
+            Customer* newCustomer = new Customer(user, ""); 
             myStore.users.push_back(newCustomer);
             newCustomer->showMenu(myStore);
         }
