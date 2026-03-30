@@ -7,10 +7,10 @@ SP07 Sua_Tuoi_Vinamilk Sua 32000 40
 SP08 Mi_Hao_Hao ThucPham 3500 200
 SP09 Trung_Ga_10_Qua ThucPham 30000 60
 SP10 Nho_Korean TraiCay 120000 25
-SP11 Dau_An_Tuong_An GiaVi 85000 
+SP11 Dau_An_Tuong_An GiaVi 85000 50
 SP12 Banh_Quy_Oreo Banh 28000 35
 SP13 Nuoc_Coca_1_5L NuocUong 18000 50
-SP14 Tao_ TraiCay 70000 30
+SP14 Tao TraiCay 70000 30
 SP15 Ca_Hop_3_Co_Gai ThucPham 27000 45
 SP16 Bot_Giat_Omo DoGiaDung 120000 36
 SP17 Chuoi_Cavendish TraiCay 30000 40
@@ -22,7 +22,7 @@ SP22 Nuoc_Pepsi_1_5L NuocUong 17000 45
 SP23 Nuoc_7Up_1_5L NuocUong 17000 40
 SP24 Tra_Xanh_Khong_Do NuocUong 10000 60
 SP25 Sting_Dau NuocUong 11000 55
-SP26 Nuoc_Cam_Ep Hop NuocUong 25000 30
+SP26 Nuoc_Cam_Ep_Hop NuocUong 25000 30
 SP30 Banh_Mi_Sandwich Banh 25000 35
 SP31 Banh_Trung_Thu Banh 80000 15
 SP32 Kem_Walls_Vani Kem 15000 50
