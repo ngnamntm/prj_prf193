@@ -1,6 +1,119 @@
-SP05 Banh_ChocoPie Banh 45000 20
 SP01 Gao_ST25 Gao 25000 100
 SP06 Choi_Lau_Nha DoGiaDung 120000 15
 SP02 Thit_Bo_Kobe Thit 500000 10
 SP04 Kem_Celano Kem 15000 30
 SP03 Rau_Muong Rau 10000 50
+SP07 Sua_Tuoi_Vinamilk Sua 32000 40
+SP08 Mi_Hao_Hao ThucPham 3500 200
+SP09 Trung_Ga_10_Qua ThucPham 30000 60
+SP10 Nho_Korean TraiCay 120000 25
+SP11 Dau_An_Tuong_An GiaVi 85000 
+SP12 Banh_Quy_Oreo Banh 28000 35
+SP13 Nuoc_Coca_1_5L NuocUong 18000 50
+SP14 Tao_ TraiCay 70000 30
+SP15 Ca_Hop_3_Co_Gai ThucPham 27000 45
+SP16 Bot_Giat_Omo DoGiaDung 120000 36
+SP17 Chuoi_Cavendish TraiCay 30000 40
+SP18 Cam_Sanh TraiCay 35000 35
+SP19 Dua_Hau TraiCay 25000 20
+SP20  TraiCay 120000 15
+SP21 Le_Japanese TraiCay 90000 18
+SP22 Nuoc_Pepsi_1_5L NuocUong 17000 45
+SP23 Nuoc_7Up_1_5L NuocUong 17000 40
+SP24 Tra_Xanh_Khong_Do NuocUong 10000 60
+SP25 Sting_Dau NuocUong 11000 55
+SP26 Nuoc_Cam_Ep Hop NuocUong 25000 30
+SP30 Banh_Mi_Sandwich Banh 25000 35
+SP31 Banh_Trung_Thu Banh 80000 15
+
+SP32 Kem_Walls_Vani Kem 15000 50
+SP33 Kem_Chocolate_Walls Kem 17000 45
+SP34 Kem_Merino_Dau Kem 18000 60
+SP35 Kem_Que_Matcha Kem 25000 40
+SP36 Kem_Hop_Chocolate Kem 70000 20
+SP37 Sua_Chua_Vinamilk Sua 6000 100
+SP38 Sua_Dac_OngTho Sua 28000 40
+SP39 Pho_Ma_Con_Bo_Cuoi Sua 35000 30
+SP40 Bo_Anchor Sua 85000 20
+SP41 Trung_Cut_20_Qua ThucPham 25000 50
+
+SP42 Thit_Heo_Ba_Chi ThucPham 120000 25
+SP43 Thit_Ga_File ThucPham 90000 30
+SP44 Ca_Hoi_PhiLe ThucPham 250000 10
+SP45 Tom_Su_500g ThucPham 180000 15
+SP46 Xuc_Xich_Duc ThucPham 70000 35
+
+SP47 Dau_Hu_Trang ThucPham 10000 60
+SP48 Nam_Rom ThucPham 30000 40
+SP49 Nam_Kim_Cham ThucPham 20000 45
+SP50 Rau_Cai_Ngot Rau 8000 80
+SP51 Rau_Cai_Thao Rau 9000 70
+
+SP52 Hanh_Tay Cu 15000 50
+SP53 Toi_Cu Cu 20000 45
+SP54 Khoai_Tay Cu 18000 60
+SP55 Ca_Rot Cu 12000 65
+SP56 Bi_Do Cu 10000 40
+
+SP57 Nuoc_Mam_Nam_Ngu GiaVi 40000 35
+SP58 Tuong_Ot_Chinsu GiaVi 18000 50
+SP59 Tuong_Ca_Chua GiaVi 20000 45
+SP60 Muoi_Iot GiaVi 7000 80
+SP61 Duong_Cat_Trang GiaVi 20000 60
+
+SP62 Mi_3_Mien ThucPham 5000 90
+SP63 Bun_Tuoi ThucPham 15000 50
+SP64 Banh_Pho ThucPham 20000 40
+SP65 Nui_Y ThucPham 25000 35
+SP66 Mi_Y_Spaghetti ThucPham 30000 30
+SP67 Nuoc_Loc_Aquafina NuocUong 6000 100
+SP68 Nuoc_Loc_Dasani NuocUong 6000 90
+SP69 Tra_Olong_TeaPlus NuocUong 12000 60
+SP70 Nuoc_Tang_Luc_RedBull NuocUong 15000 50
+SP71 Nuoc_Energy_Monster NuocUong 30000 25
+
+SP72 Bia_Heineken DoUong 20000 70
+SP73 Bia_Saigon DoUong 15000 80
+SP74 Bia_Tiger DoUong 18000 75
+SP75 Sua_Dau_Nanh_Fami Sua 7000 90
+SP76 Sua_Hat_Oc_Cho Sua 35000 30
+
+SP77 Snack_Khoai_Tay_Lays Banh 12000 100
+SP78 Snack_Poca Banh 10000 90
+SP79 Bap_Rang_Bo Banh 15000 70
+SP80 Keo_Gum_Extra Banh 10000 60
+SP81 Keo_Dua_BenTre Banh 20000 50
+
+SP82 Giay_Ve_Sinh DoGiaDung 25000 40
+SP83 Nuoc_Rua_Chen_Sunlight DoGiaDung 30000 35
+SP84 Nuoc_Giat_Ariel DoGiaDung 120000 20
+SP85 Dau_Goi_Clear DoGiaDung 90000 25
+SP86 Sua_Tam_Lifebuoy DoGiaDung 70000 30
+SP87 Banh_Mi_Ngot Banh 15000 60
+SP88 Banh_Bong_Lan Banh 25000 50
+SP89 Banh_Donut Banh 20000 40
+SP90 Banh_Crepe Banh 30000 35
+SP91 Banh_Flan Banh 10000 70
+SP92 Kem_Tra_Xanh Kem 22000 45
+SP93 Kem_Dua Kem 18000 50
+SP94 Kem_Sau_Rieng Kem 25000 30
+SP95 Kem_Vani_Hop Kem 65000 25
+SP96 Vai_Thieu TraiCay 70000 20
+SP97 Nhan_Trai TraiCay 65000 22
+SP98 Mit_To TraiCay 30000 15
+SP99 Kem_Xoai Kem 20000 40
+SP100 Snack_Bap_Ngot Banh 12000 70
+SP101 Snack_Pho_Mai Banh 15000 65
+SP102 Keo_Socola Banh 20000 50
+SP103 Keo_Menthos Banh 12000 55
+SP104 Keo_Deo_Trai_Cay Banh 18000 45
+SP105 Nuoc_Suoi_Lavie NuocUong 6000 100
+SP106 Tra_Chanh_Dong_Chai NuocUong 12000 70
+SP107 Nuoc_Ngot_Fanta NuocUong 15000 65
+SP108 Sua_Trai_Cay NuocUong 20000 50
+SP109 Ca_Phe_Lon_Nescafe NuocUong 18000 55
+
+SP110 Nuoc_Lau_San DoGiaDung 50000 30
+SP111 Nuoc_Lau_Kinh DoGiaDung 45000 25
+SP112 Nuoc_Tay_Javen DoGiaDung 20000 40
+SP113 Khau_Trang_YTe DoGiaDung 30000 100
