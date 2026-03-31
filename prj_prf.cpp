@@ -22,8 +22,7 @@ long long getSafeInput() {
         }
     }
 }
-
-// ================= LỚP SẢN PHẨM =================
+//lớp sản phẩn 
 class Product {
 private:
     string id, name, category;
@@ -50,7 +49,7 @@ public:
     }
 };
 
-// ================= CẤU TRÚC GIỎ HÀNG & ĐƠN HÀNG =================
+//giỏ hàng-đờn hàng
 struct CartItem {
     string productID; 
     long long quantity; 
@@ -62,7 +61,7 @@ struct Order {
     long long totalBill; 
 };
 
-// ================= HỆ THỐNG NGƯỜI DÙNG =================
+//uẻ 
 class Store;
 
 class User {
@@ -94,7 +93,7 @@ public:
     virtual void showMenu(Store& store) = 0; 
 };
 
-// ================= LỚP CỬA HÀNG =================
+//cua hang
 class Store {
 public:
     vector<Product> products;
@@ -255,7 +254,7 @@ public:
     }
 };
 
-// ================= CÁC LỚP PHÂN QUYỀN =================
+// lop phan quyen 
 
 class Boss : public User {
 public:
@@ -457,7 +456,7 @@ public:
                 Product* p = store.binarySearch(id); 
                 if (p) {
                     cout << "=> Nhap so luong mua: "; 
-                    qty = getSafeInput(); // BẢO VỆ NHẬP LƯỢNG MUA
+                    qty = getSafeInput(); 
 
                     if (qty > 0 && p->getStock() >= qty) {
                         cart.push_back({id, qty}); 
