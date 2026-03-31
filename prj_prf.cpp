@@ -511,7 +511,7 @@ int main() {
         cout << "\n=========================================\n";
         cout << "      HỆ THỐNG QUẢN LÝ SIÊU THỊ MINI      \n";
         cout << "=========================================\n";
-        cout << "Nhap ten tai khoan cua ban (hoac 'exit' de thoat): "; 
+        cout << "Nhap tai khoan cua ban (hoac 'exit' de thoat): "; 
         
         do {
             getline(cin, user);
