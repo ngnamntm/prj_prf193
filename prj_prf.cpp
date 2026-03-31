@@ -5,7 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
-#include <windows.h> // Thu vien ho tro hien thi Tieng Viet
+#include <windows.h> 
 
 using namespace std;
 
@@ -80,7 +80,7 @@ public:
     virtual void showMenu(Store& store) = 0; 
 };
 
-// ================= LỚP CỬA HÀNG (TRUNG TÂM DỮ LIỆU) =================
+// ================= LỚP CỬA HÀNG =================
 class Store {
 public:
     vector<Product> products;
@@ -91,7 +91,7 @@ public:
 
     ~Store() { for (User* u : users) delete u; }
 
-    // --- CÔNG CỤ TÁCH CHỮ VÀ SỐ CHO NATURAL SORT ---
+    // --- TÁCH CHỮ VÀ SỐ  ---
     static void splitId(const string& id, string& prefix, int& num) {
         prefix = "";
         string numStr = "";
@@ -131,7 +131,7 @@ public:
 
         file.close();
         
-        // Sắp xếp tự nhiên (Natural Sort)
+        // (Natural Sort)
         sort(products.begin(), products.end(), [](const Product& a, const Product& b) { 
             string prefixA, prefixB; int numA, numB;
             splitId(a.getId(), prefixA, numA);
@@ -187,7 +187,7 @@ public:
         for (const auto& p : products) p.display();
     }
 
-    // TÌM KIẾM NHỊ PHÂN THÔNG MINH
+    // TÌM KIẾM NHỊ PHÂN 
     Product* binarySearch(const string& id) {
         string targetPrefix; int targetNum;
         splitId(id, targetPrefix, targetNum); 
@@ -373,7 +373,7 @@ public:
                         }
                         store.totalRevenue += currentOrder.totalBill;
                         
-                        // Luu lai ton kho moi xuong file sau khi ban
+                        // Luu lai ton kho moi
                         store.saveAllProductsToFile("products.txt");
 
                         store.addLog(username, role, logDetail + "Thu: " + to_string((long long)currentOrder.totalBill));
@@ -476,7 +476,7 @@ int main() {
         cout << "\n=========================================\n";
         cout << "      HỆ THỐNG QUẢN LÝ SIÊU THỊ MINI      \n";
         cout << "=========================================\n";
-        cout << "Nhap tai khoan (hoac 'exit' de thoat): "; cin >> user;
+        cout << "Nhap tai khoan (hoac 'exit' de thoat): "; getline(cin, user);
         if (user == "exit") break;
 
         User* loggedInUser = nullptr;
