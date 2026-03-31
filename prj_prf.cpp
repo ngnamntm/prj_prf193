@@ -476,7 +476,7 @@ int main() {
         cout << "\n=========================================\n";
         cout << "      HỆ THỐNG QUẢN LÝ SIÊU THỊ MINI      \n";
         cout << "=========================================\n";
-        cout << "Nhap tai khoan (hoac 'exit' de thoat): "; getline(cin, user);
+        cout << "Nhap tai khoan (hoac 'exit' de thoat): "; cin >> ws; getline(cin, user);
         if (user == "exit") break;
 
         User* loggedInUser = nullptr;
